@@ -4,98 +4,296 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Мои приложения</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234a6fa5'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial, sans-serif'>М</text></svg>">
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f9;
-      color: #333;
+    * {
       margin: 0;
       padding: 0;
-      line-height: 1.6;
+      box-sizing: border-box;
     }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Анимированный фон */
+    body::before {
+      content: '';
+      position: fixed;
+      width: 200%;
+      height: 200%;
+      top: -50%;
+      left: -50%;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+      animation: backgroundMove 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundMove {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-5%, -5%); }
+    }
+
+    /* Плавающие частицы */
+    .particle {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 15s infinite ease-in-out;
+      z-index: -1;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+    }
+
     header {
-      background: #4a6fa5;
-      color: white;
-      padding: 2rem 0;
+      padding: 4rem 2rem;
       text-align: center;
+      animation: fadeInDown 1s ease-out;
     }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    header h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #fff, #f0f0f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+
     .container {
       width: 90%;
       max-width: 1200px;
-      margin: 2rem auto;
-    }
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: #eee;
-      color: #555;
-      font-size: 0.9rem;
+      margin: 0 auto 4rem;
+      padding: 0 1rem;
     }
 
-    /* Сетка для приложений */
     .apps-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
     }
 
     .app-card {
-      background: white;
-      border-radius: 12px;
-      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 2.5rem;
       text-align: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out;
+      animation-fill-mode: both;
     }
+
+    .app-card:nth-child(1) { animation-delay: 0.1s; }
+    .app-card:nth-child(2) { animation-delay: 0.2s; }
+    .app-card:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .app-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .app-card:hover::before {
+      left: 100%;
+    }
+
     .app-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.4);
     }
 
     .app-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 1rem auto;
-      background: #4a6fa5;
-      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: white;
-      font-size: 28px;
-      font-weight: bold;
+      font-size: 36px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .app-card:hover .app-icon {
+      transform: rotateY(360deg);
+    }
+
+    .app-icon svg {
+      width: 48px;
+      height: 48px;
+      color: white;
     }
 
     .app-title {
-      font-size: 1.2rem;
-      margin: 0.5rem 0;
-      color: #333;
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      font-weight: 700;
+      color: #fff;
     }
 
     .app-desc {
-      font-size: 0.95rem;
-      color: #666;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
     }
 
-    /* Кнопка политики */
+    .store-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .store-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .store-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .store-btn img {
+      filter: brightness(0) invert(1);
+    }
+
     .privacy-link {
       display: inline-block;
       margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
+      padding: 0.7rem 1.5rem;
       color: #fff;
-      background-color: #6c757d;
-      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
       text-decoration: none;
-      transition: background-color 0.2s;
-    }
-    .privacy-link:hover {
-      background-color: #5a6268;
+      transition: all 0.3s ease;
+      font-weight: 500;
     }
 
-    /* Модальное окно */
+    .privacy-link:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    #contacts {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 3rem;
+      border-radius: 24px;
+      text-align: center;
+      animation: fadeInUp 1s ease-out 0.4s both;
+    }
+
+    #contacts h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    #contacts p {
+      margin: 1rem 0;
+      font-size: 1.1rem;
+    }
+
+    #contacts a {
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    #contacts a:hover {
+      border-bottom-color: #fff;
+      opacity: 1;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+    }
+
     .modal {
       display: none;
       position: fixed;
@@ -103,198 +301,349 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal-content {
-      background: white;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95));
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       width: 90%;
-      max-width: 600px;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      max-width: 700px;
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       position: relative;
-      max-height: 80vh;
+      max-height: 85vh;
       overflow-y: auto;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .close-btn {
       position: absolute;
-      top: 1rem;
-      right: 1.2rem;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 40px;
+      height: 40px;
       font-size: 1.5rem;
-      background: none;
-      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
       cursor: pointer;
-      color: #999;
+      color: #fff;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .close-btn:hover {
-      color: #333;
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
     }
 
     .modal-title {
-      color: #4a6fa5;
+      color: #fff;
       margin-top: 0;
+      font-size: 2rem;
+      margin-bottom: 1rem;
     }
 
-    /* Контакты */
-    #contacts {
-      background: white;
-      padding: 2rem;
+    .app-details {
+      color: #fff;
+    }
+
+    .details-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .features h3 {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
+    }
+
+    .features-grid ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .features-grid li {
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .features-grid li:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(5px);
+    }
+
+    .why-us {
+      margin: 2rem 0;
+    }
+
+    .why-us h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .benefits {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .benefit-item {
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      border-left: 4px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .details-footer {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-privacy, .btn-contact {
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-privacy:hover, .btn-contact:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      .apps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        padding: 2rem;
+      }
+
+      .features-grid ul {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Скроллбар */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.5);
     }
   </style>
 </head>
 <body>
 
+  <!-- Плавающие частицы -->
+  <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+  <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+  <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+  <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
+  <div class="particle" style="left: 60%; animation-delay: 1s;"></div>
+  <div class="particle" style="left: 70%; animation-delay: 3s;"></div>
+  <div class="particle" style="left: 80%; animation-delay: 5s;"></div>
+  <div class="particle" style="left: 90%; animation-delay: 7s;"></div>
+
   <header>
-    <h1>Мои приложения</h1>
+    <h1>✨ Мои приложения</h1>
     <p>Полезные инструменты для повседневного использования</p>
   </header>
 
   <div class="container">
     <div class="apps-grid">
       
-      <!-- Приложение 1 -->
-     <div class="app-card expanded">
-    <div class="app-icon">
-      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Контур иконки заметок -->
-        <path d="M16 8H48C50.2091 8 52 9.79086 52 12V52C52 54.2091 50.2091 56 48 56H16C13.7909 56 12 54.2091 12 52V12C12 9.79086 13.7909 8 16 8Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M24 20H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M24 32H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M24 44H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </div>
-    
-    <div class="app-content">
-      <h3 class="app-title">MypNotes — Заметки, Задачи, Цели</h3>
-      <p class="app-desc">Управляйте своими заметками. Редактируйте текст, используйте голосовой ввод и многое другое!</p>
-      
-      <!-- Кнопки сторов -->
-<div class="store-buttons">
-  <a href="https://play.google.com/store/apps/details?id=yura.medved.note"
-     target="_blank" rel="noopener" class="store-btn play-market">
-    <img src="images/play.png" alt="Google Play" width="24" height="24">
-    <span>Google Play</span>
-  </a>
-
-  <a href="https://rustore.ru/catalog/app/yura.medved.note"
-     target="_blank" rel="noopener" class="store-btn rustore">
-    <img src="images/rustore.png" alt="RuStore" width="24" height="24">
-    <span>RuStore</span>
-  </a>
-</div>
-      
-      <!-- Политика конфиденциальности -->
-      <a href="privacy-notes.html" class="privacy-link" target="_blank">
-        Политика конфиденциальности
-      </a>
-    </div>
-  </div>
-
-
-      <!-- Приложение 2 -->
-   
+      <div class="app-card">
+        <div class="app-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 8H48C50.2091 8 52 9.79086 52 12V52C52 54.2091 50.2091 56 48 56H16C13.7909 56 12 54.2091 12 52V12C12 9.79086 13.7909 8 16 8Z" stroke="currentColor" stroke-width="3"/>
+            <path d="M20 20H44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M20 32H44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M20 44H44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        
+        <h3 class="app-title">MypNotes</h3>
+        <p class="app-desc">Заметки, Задачи, Цели — всё в одном месте. Управляйте своими идеями с голосовым вводом и продвинутым редактором!</p>
+        
+        <div class="store-buttons">
+          <a href="https://play.google.com/store/apps/details?id=yura.medved.note" target="_blank" rel="noopener" class="store-btn">
+            <span>📱</span>
+            <span>Google Play</span>
+          </a>
+          <a href="https://rustore.ru/catalog/app/yura.medved.note" target="_blank" rel="noopener" class="store-btn">
+            <span>🛍️</span>
+            <span>RuStore</span>
+          </a>
+        </div>
+        
+        <a href="#" onclick="openModal('notes'); return false;" class="privacy-link">
+          Подробнее о приложении
+        </a>
+      </div>
 
     </div>
 
-    <!-- Контакты -->
     <section id="contacts">
-      <h2>Связаться со мной</h2>
+      <h2>🤝 Связаться со мной</h2>
       <p>📧 <a href="mailto:medvediiiyura@gmail.com">medvediiiyura@gmail.com</a></p>
-       <p>📧 <a href="mailto:medvediiiyura@yandex.ru">medvediiiyura@yandex.ru</a></p>
-      <p>GitHub: <a href="https://github.com/myprofile" target="_blank">github.com/MedvedbYura</a></p>
+      <p>📧 <a href="mailto:medvediiiyura@yandex.ru">medvediiiyura@yandex.ru</a></p>
+      <p>💻 GitHub: <a href="https://github.com/MedvedbYura" target="_blank">github.com/MedvedbYura</a></p>
     </section>
   </div>
 
-  <!-- Модальные окна с подробным описанием -->
   <div id="notes-modal" class="modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal('notes')">&times;</button>
-      <h2 class="modal-title">Приложение «Заметки»</h2>
-     <div class="app-details">
-    <header class="details-header">
-        <h1>MypNotes</h1>
-        <p class="tagline">Ваша идеальная цифровая записная книжка</p>
-    </header>
+      <div class="app-details">
+        <header class="details-header">
+          <h1>MypNotes</h1>
+          <p class="tagline">Ваша идеальная цифровая записная книжка</p>
+        </header>
 
-    <section class="description">
-        <p>Добро пожаловать в <strong>MypNotes</strong> — надежное и многофункциональное приложение для управления вашими идеями. Мы создали инструмент, который помогает держать всё под контролем.</p>
-    </section>
+        <section class="description">
+          <p>Добро пожаловать в <strong>MypNotes</strong> — надежное и многофункциональное приложение для управления вашими идеями. Мы создали инструмент, который помогает держать всё под контролем.</p>
+        </section>
 
-    <section class="features">
-        <h3>🚀 Основные функции:</h3>
-        <div class="features-grid">
+        <section class="features">
+          <h3>🚀 Основные функции:</h3>
+          <div class="features-grid">
             <ul>
-                <li><span>📝</span> <strong>Редактирование:</strong> Удобный текстовый редактор.</li>
-                <li><span>🔒</span> <strong>Защита:</strong> Доступ к заметкам по паролю.</li>
-                <li><span>📱</span> <strong>Виджеты:</strong> Быстрый доступ с домашнего экрана.</li>
-                <li><span>🎨</span> <strong>Персонализация:</strong> Смена цветовых тем и шрифтов.</li>
-                <li><span>📷</span> <strong>Сканер:</strong> Превращайте фото текста в заметку.</li>
-                <li><span>🎙️</span> <strong>Голос:</strong> Создание заметок голосом.</li>
-                <li><span>🖼️</span> <strong>Медиа:</strong> Добавление изображений.</li>
-                <li><span>📁</span> <strong>Организация:</strong> Создание папок для порядка.</li>
-                <li><span>🛒</span> <strong>Списки:</strong> Удобный список покупок.</li>
+              <li><span>📝</span> <strong>Редактирование:</strong> Удобный текстовый редактор</li>
+              <li><span>🔒</span> <strong>Защита:</strong> Доступ к заметкам по паролю</li>
+              <li><span>📱</span> <strong>Виджеты:</strong> Быстрый доступ с домашнего экрана</li>
+              <li><span>🎨</span> <strong>Персонализация:</strong> Смена цветовых тем и шрифтов</li>
+              <li><span>📷</span> <strong>Сканер:</strong> Превращайте фото текста в заметку</li>
+              <li><span>🎙️</span> <strong>Голос:</strong> Создание заметок голосом</li>
+              <li><span>🖼️</span> <strong>Медиа:</strong> Добавление изображений</li>
+              <li><span>📁</span> <strong>Организация:</strong> Создание папок для порядка</li>
+              <li><span>🛒</span> <strong>Списки:</strong> Удобный список покупок</li>
             </ul>
-        </div>
-    </section>
+          </div>
+        </section>
 
-    <section class="why-us">
-        <h3>Почему выбирают MypNotes?</h3>
-        <div class="benefits">
-            <div class="benefit-item"><strong>Интуитивность:</strong> Максимально просто и понятно.</div>
-            <div class="benefit-item"><strong>Безопасность:</strong> Ваши данные под надежной защитой.</div>
-            <div class="benefit-item"><strong>Обновления:</strong> Регулярные улучшения и новые функции.</div>
-        </div>
-    </section>
+        <section class="why-us">
+          <h3>Почему выбирают MypNotes?</h3>
+          <div class="benefits">
+            <div class="benefit-item"><strong>Интуитивность:</strong> Максимально просто и понятно</div>
+            <div class="benefit-item"><strong>Безопасность:</strong> Ваши данные под надежной защитой</div>
+            <div class="benefit-item"><strong>Обновления:</strong> Регулярные улучшения и новые функции</div>
+          </div>
+        </section>
 
-    <footer class="details-footer">
-        <p>Есть вопросы? Мы всегда рады помочь!</p>
-        <div class="action-buttons">
+        <footer class="details-footer">
+          <p>Есть вопросы? Мы всегда рады помочь!</p>
+          <div class="action-buttons">
             <a href="privacy-notes.html" class="btn-privacy" target="_blank">Политика конфиденциальности</a>
             <a href="mailto:medvediiiyura@gmail.com" class="btn-contact">Служба поддержки</a>
-        </div>
-    </footer>
-</div>
+          </div>
+        </footer>
+      </div>
     </div>
   </div>
-
-
-
-  <!-- JavaScript -->
-  <script>
-    function openModal(id) {
-      document.getElementById(id + '-modal').style.display = 'flex';
-    }
-
-    function closeModal(id) {
-      document.getElementById(id + '-modal').style.display = 'none';
-    }
-
-    // Закрыть при клике вне окна
-    window.onclick = function(event) {
-      const modals = document.querySelectorAll('.modal');
-      modals.forEach(modal => {
-        if (event.target === modal) {
-          modal.style.display = 'none';
-        }
-      });
-    };
-  </script>
 
   <footer>
     &copy; 2025 Все права защищены.
   </footer>
 
+  <script>
+    function openModal(id) {
+      document.getElementById(id + '-modal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id + '-modal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      });
+    };
+
+    // Эффект параллакса при скролле
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallax = document.querySelector('body::before');
+      if (parallax) {
+        document.body.style.setProperty('--scroll', scrolled * 0.5 + 'px');
+      }
+    });
+  </script>
+
 </body>
 </html>
-
 
 
