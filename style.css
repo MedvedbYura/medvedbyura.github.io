@@ -25,7 +25,6 @@ h1 {
   background-color: #5a6268;
 }
 
-
 .app-card {
     border: 1px solid #ddd;
     padding: 20px;
@@ -77,16 +76,14 @@ h1 {
 .legal-links a:hover { text-decoration: underline; }
 
 
-
-
 .app-details {
-    line-height: 1.5;
-    color: #333;
-    text-align: left;
+  line-height: 1.5;
+  color: inherit;
+  text-align: left;
 }
 
 .details-header h1 { margin-bottom: 5px; color: #007bff; }
-.tagline { font-style: italic; color: #666; margin-bottom: 20px; }
+.tagline { font-style: italic; color: currentColor; opacity: 0.9; margin-bottom: 20px; }
 
 .features h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; }
 .features ul { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -95,8 +92,20 @@ h1 {
 .features li { font-size: 0.95em; margin-bottom: 5px; }
 .features li span { margin-right: 8px; }
 
-.why-us { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 20px; }
-.benefit-item { margin-bottom: 8px; font-size: 0.9em; border-left: 3px solid #28a745; padding-left: 10px; }
+.why-us {
+  background: rgba(255,255,255,0.04);
+  padding: 18px;
+  border-radius: 12px;
+  margin-top: 20px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.benefit-item {
+  margin-bottom: 10px;
+  font-size: 0.95em;
+  border-left: 4px solid rgba(255,255,255,0.18);
+  padding-left: 12px;
+  color: inherit;
+}
 
 .details-footer { margin-top: 30px; text-align: center; border-top: 1px solid #eee; padding-top: 20px; }
 
@@ -116,3 +125,117 @@ h1 {
 
 .btn-contact { background: #f0f0f0; color: #333; border: 1px solid #ccc; }
 .btn-contact:hover { background: #333; color: #fff; }
+
+
+.screenshots {
+  overflow: hidden;
+}
+
+.screenshots h3 {
+  margin: 32px 0 20px;
+}
+.screenshots-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.screenshots-row img {
+  height: 220px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+
+/* Details page refinements (for notes, baby, etc.) */
+.details-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin: 0 0 0.4rem;
+  background: linear-gradient(45deg, #ffffff, #f0f0f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.tagline { font-size: 1.1rem; opacity: 0.95; margin-bottom: 1rem; }
+
+.btn-privacy, .btn-contact{ border-radius:12px; padding:10px 18px; font-weight:700; backdrop-filter: blur(6px); }
+.btn-privacy{ background: rgba(255,255,255,0.12); color: #fff; border:1px solid rgba(255,255,255,0.18); }
+.btn-contact{ background: rgba(255,255,255,0.06); color:#fff; border:1px solid rgba(255,255,255,0.12); }
+.btn-privacy:hover{ background: rgba(255,255,255,0.95); color: var(--primary, #667eea); }
+
+/* Center screenshots row and make images larger with slight tilt */
+.screenshots-row{ display:flex; gap:18px; overflow-x:auto; justify-content:center; padding: 8px 0; }
+.screenshots-row img{ height:260px; transition: transform .35s ease, box-shadow .35s ease; transform-origin: center; }
+.screenshots-row img:nth-child(odd){ transform: rotate(-4deg); }
+.screenshots-row img:nth-child(even){ transform: rotate(3deg); }
+.screenshots-row img:hover{ transform: rotate(0deg) scale(1.03); box-shadow: 0 18px 60px rgba(0,0,0,0.45); }
+
+/* Ensure action buttons on details pages align center and animate */
+.action-buttons{ justify-content:center }
+.action-buttons a{ margin:6px }
+
+@media (max-width:600px){ .screenshots-row img{ height:160px } .details-header h1{ font-size:1.6rem } }
+
+
+.screenshots {
+  overflow: visible; /* Важно! Чтобы тени не обрезались */
+  margin: 32px -20px; /* Отрицательные отступы для компенсации */
+  padding: 0 20px;
+}
+
+.screenshots h3 {
+  margin: 32px 0 30px;
+  text-align: center;
+}
+
+.screenshots-row {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding: 40px 10px; /* Padding для теней */
+  justify-content: center;
+  perspective: 1500px;
+  
+  /* Скрываем скроллбар но оставляем функциональность */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.3) transparent;
+}
+
+.screenshots-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.screenshots-row::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
+
+.screenshots-row::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+}
+
+.screenshots-row img {
+  height: 280px;
+  border-radius: 16px;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+  flex-shrink: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+/* Более выраженные и разнообразные наклоны */
+.screenshots-row img:nth-child(1) { transform: rotate(-8deg) translateY(5px); }
+.screenshots-row img:nth-child(2) { transform: rotate(5deg) translateY(-8px); }
+.screenshots-row img:nth-child(3) { transform: rotate(-6deg) translateY(10px); }
+.screenshots-row img:nth-child(4) { transform: rotate(7deg) translateY(-5px); }
+.screenshots-row img:nth-child(5) { transform: rotate(-5deg) translateY(8px); }
+
+/* Эффект при наведении */
+.screenshots-row img:hover { 
+  transform: rotate(0deg) scale(1.08) translateZ(40px); 
+  box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+  z-index: 10;
+}

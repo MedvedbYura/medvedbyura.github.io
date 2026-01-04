@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MypNotes — Подробнее</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; }
+    /* Page-specific animations and overrides (only for details pages) */
+    .animate-in{ animation: appear .45s forwards cubic-bezier(.2,.9,.3,1); opacity:0; transform:translateY(12px) }
+    @keyframes appear{ to{ opacity:1; transform:none } }
+    .action-buttons a{ opacity:0; transform:translateY(8px); display:inline-block }
+    .action-buttons a.animate-in{ opacity:1; transform:none }
+    .screenshots-row img{ opacity:0; transform:translateY(8px); }
+    .screenshots-row img.animate-in{ opacity:1; transform:none }
+    .focused{ outline: none; box-shadow: 0 20px 60px rgba(0,0,0,0.45); transform: translateY(-6px); }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <article class="app-details">
+      <header class="details-header">
+        <h1>MypNotes</h1>
+        <p class="tagline">Ваша идеальная цифровая записная книжка</p>
+      </header>
+
+      <section class="description">
+        <p>Добро пожаловать в <strong>MypNotes</strong> — надежное и многофункциональное приложение для управления вашими идеями. Мы создали инструмент, который помогает держать всё под контролем.</p>
+      </section>
+
+      <section class="screenshots">
+        <h3>📸 Скриншоты приложения</h3>
+        <div class="screenshots-row">
+          <img src="screenshot/notes/1.png" alt="Скриншот MypNotes 1">
+            <img src="screenshot/notes/2.png" alt="Скриншот MypNotes 2">
+            <img src="screenshot/notes/3.png" alt="Скриншот MypNotes 3">
+            <img src="screenshot/notes/4.png" alt="Скриншот MypNotes 4">
+            <img src="screenshot/notes/5.png" alt="Скриншот MypNotes 5">
+        </div>
+      </section>
+
+      <section class="features">
+        <h3>🚀 Основные функции:</h3>
+        <div class="features-grid">
+          <ul>
+            <li><span>📝</span> <strong>Редактирование:</strong> Удобный текстовый редактор</li>
+            <li><span>🔒</span> <strong>Защита:</strong> Доступ к заметкам по паролю</li>
+            <li><span>📱</span> <strong>Виджеты:</strong> Быстрый доступ с домашнего экрана</li>
+            <li><span>🎨</span> <strong>Персонализация:</strong> Смена цветовых тем и шрифтов</li>
+            <li><span>📷</span> <strong>Сканер:</strong> Превращайте фото текста в заметку</li>
+            <li><span>🎙️</span> <strong>Голос:</strong> Создание заметок голосом</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="why-us">
+        <h3>Почему выбирают MypNotes?</h3>
+        <div class="benefits">
+          <div class="benefit-item"><strong>Интуитивность:</strong> Максимально просто и понятно</div>
+          <div class="benefit-item"><strong>Безопасность:</strong> Ваши данные под надежной защитой</div>
+          <div class="benefit-item"><strong>Обновления:</strong> Регулярные улучшения и новые функции</div>
+        </div>
+      </section>
+
+      <footer class="details-footer">
+        <p>Есть вопросы? Мы всегда рады помочь!</p>
+        <div class="action-buttons">
+          <a href="privacy-notes.html" class="btn-privacy" target="_blank">Политика конфиденциальности</a>
+          <a href="mailto:medvediiiyura@gmail.com" class="btn-contact">Служба поддержки</a>
+        </div>
+      </footer>
+    </article>
+  </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const animTargets = Array.from(document.querySelectorAll('.action-buttons a, .screenshots-row img'));
+      animTargets.forEach((el,i)=> setTimeout(()=> el.classList.add('animate-in'), i*80));
+
+      const buttons = Array.from(document.querySelectorAll('.action-buttons a'));
+      let idx = 0;
+      if(buttons.length) buttons.forEach(b=> b.setAttribute('tabindex','0'));
+      function focusBtn(i){
+        buttons.forEach((b,j)=> b.classList.toggle('focused', i===j));
+        if(buttons[i]) buttons[i].focus(); idx = i;
+      }
+      window.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowRight'){ e.preventDefault(); focusBtn(Math.min(idx+1, buttons.length-1)); }
+        if(e.key === 'ArrowLeft'){ e.preventDefault(); focusBtn(Math.max(idx-1, 0)); }
+      });
+    });
+  </script>
+</body>
+</html>
